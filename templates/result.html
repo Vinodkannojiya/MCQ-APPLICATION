@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous"/>
+    <title>Result Page</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="subject" href="/subject">Exam</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+<h1>Result status</h1>
+{% if result %}
+    <table border=3 width="80%"><tbody>
+        <tr>
+            <th>USER NAME</th>
+            <th>SUBJECT NAME</th>
+            <th>DATE OF EXAM</th>
+            <th>SCORE</th>
+            <th>TOTAL</th>
+            <th>PERCENTAGE</th>
+        </tr>
+{% for row in result %}
+        <tr align="center">
+            <td>{{ row.user_name }}</td>
+            <td>{{ row.subject_name }}</td>
+            <td>{{ row.date_of_exam }}</td>
+            <td>{{ row.score }}</td>
+            <td>{{ row.total }}</td>
+            <td>{{ row.percentage }}</td>
+        </tr>
+{% endfor %}
+        </tbody></table></br>
+{% endif %}
+<form method="POST">
+  <div align="center">
+    <button type="submit" class="btn btn-primary">GO TO EXAM</button>
+  </div>
+</form>
+</body>
+</html>
