@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Subject </title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
+            <a class="nav-item nav-link" id="learn" href="/learn">Learn</a>
+          <a class="nav-item nav-link" id="subject" href="/subject">Exam</a>
+          <a class="nav-item nav-link" id="result" href="/result">Result</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+<h1>Select Exam Subject</h1>
+{% if subject %}
+    <table border=3><tbody>
+    <tr>
+        <th>ADDED DATE</th>
+        <th>SUBJECT NAME</th>
+    </tr>
+{% for row in subject %}
+     <tr>
+        <td><lable> {{ row.added_date }} </lable></td>
+        <td><a id="sub_name" href="/question/{{row.subject_name}}"> {{ row.subject_name }} </a></td>
+    </tr>
+{% endfor %}
+    </tbody></table>
+{% endif %}
+{% if learn %}
+    <table border=3><tbody>
+    <tr>
+        <th>ADDED DATE</th>
+        <th>SUBJECT NAME</th>
+    </tr>
+{% for row in learn %}
+     <tr>
+        <td><lable> {{ row.added_date }} </lable></td>
+        <td><a id="sub_name1" href="/learn/{{row.subject_name}}"> {{ row.subject_name }} </a></td>
+    </tr>
+{% endfor %}
+    </tbody></table>
+{% endif %}
+
+</body>
+</html>

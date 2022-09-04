@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Question </title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+    <script>
+        var duration = 60
+        setTimeout(function(){
+         document.forms[0].submit();
+         },duration * 1000);
+
+        var d = new Date();
+        var countDownTime = d.setSeconds(d.getSeconds() + duration)
+        var x = setInterval(function(){
+            var now = new Date().getTime();
+            var distance = countDownTime - now;
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("mytimer").innerHTML = "Time Remaining : " + seconds + " seconds ";
+            if (distance < 0){
+            clearInterval(x)
+            }
+        },0
+        );
+    </script>
+</head>
+<body >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
+            <a class="nav-item nav-link" id="learn" href="/learn">Learn</a>
+          <a class="nav-item nav-link" id="subject" href="/subject">Exam</a>
+          <a class="nav-item nav-link" id="result" href="/result">Result</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+<form action="/question" method="POST">
+{% if question %}
+    <h1 name="subject_name">Question from Subject :- {{question[0].subject_name}}</h1>
+    <p id="mytimer" align="right" style="font-size:200%"></p></br>
+    <table border=3 width=80%" align="center"><tbody>
+        <tr>
+            <th>Question No</th>
+            <th>Question</th>
+            <th>Option 1</th>
+            <th>Option 2</th>
+            <th>Option 3</th>
+            <th>Option 4</th>
+        </tr>
+{% for row in question %}
+        <tr>
+            <td align="center">{{ row.question_number }}</td>
+            <td>&nbsp;{{ row.question }}</td>
+            <td>
+                  <label><input type="radio" id="op1" name="{{ row.question_number }}" value={{ row.option1 }} >&nbsp;{{ row.option1 }}</label>
+            </td>
+            <td>
+                  <label><input type="radio" id="op2" name="{{ row.question_number }}" value={{ row.option2 }}>&nbsp;{{ row.option2 }}</label>
+            </td>
+            <td>
+                  <label><input type="radio" id="op3" name="{{ row.question_number }}" value={{ row.option3 }}>&nbsp;{{ row.option3 }}</label>
+            </td>
+            <td>
+                  <label><input type="radio" id="op4" name="{{ row.question_number }}" value={{ row.option4 }}>&nbsp;{{ row.option4 }}</label>
+            </td>
+
+        </tr>
+{% endfor %}
+     </tbody></table></br>
+    <input type="hidden" name="sub_name" value={{ question[0].subject_name }}>
+     <div align="center">
+        <button type="submit" class="btn btn-primary" onclick=" checkButton()">SUBMIT ANSWERS</button>
+     </div>
+</form>
+{% endif %}
+</body>
+<script>
+    function checkButton() {
+        if(document.getElementsByName('1').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('2').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('3').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('4').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('5').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('6').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('7').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('8').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('9').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else if(document.getElementsByName('10').checked == false) {
+            document.write("Summer radio button is not selected");
+        } else {""}
+}
+    </script>
+</html>
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Result Page</title>
+    <style>
+        .red {
+    color:#FF0000;
+    }
+
+    .green {
+        color:#33FF3C;
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+    <script>
+
+        var value = document.getElementsByName("perc");
+        for (var index = 0; index < value.length; index++){
+        alert(value[index]);
+        }
+
+        if (value < 40.00 ){
+        document.getElementsByName("perc").innerHTML.setAttribute("style","background-color:#f00;")
+        }
+
+    </script>
+</head>
+<body >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
+            <a class="nav-item nav-link" id="learn" href="/learn">Learn</a>
+          <a class="nav-item nav-link" id="subject" href="/subject">Exam</a>
+            <a class="nav-item nav-link" id="result" href="/result">Result</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+<h1>Result status</h1>
+{% if result %}
+    <table border=3 width="80%"><tbody>
+        <tr align="center">
+            <th>USER NAME</th>
+            <th>SUBJECT NAME</th>
+            <th>DATE OF EXAM</th>
+            <th>SCORE</th>
+            <th>TOTAL</th>
+            <th>PERCENTAGE</th>
+        </tr>
+{% for row in result %}
+        <tr align="center">
+            <td>{{ row.user_name }}</td>
+            <td>{{ row.subject_name }}</td>
+            <td>{{ row.date_of_exam }}</td>
+            <td align="right">{{ row.score }}</td>
+            <td align="right">{{ row.total }}</td>
+            <td align="right" name="perc">{{ row.percentage }}</td>
+        </tr>
+{% endfor %}
+        </tbody></table></br>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Question </title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+    <style>
+        td {
+  border-bottom: 1px solid;
+}
+    </style>
+</head>
+<body >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/admin">Home</a>
+          <a class="nav-item nav-link" id="add_question" href="/add_question">Add Question</a>
+          <a class="nav-item nav-link" id="logout" href="/logout" a>Logout</a>
+        </div>
+      </div>
+    </nav>
+
+<form action="/add_question" method="POST">
+
+<h1 align="center">Add Question</h1><br>
+<table border=3 width=80%" align="center">
+
+
+    <div class="col-md-12 text-center">
+        <label><b>Enter Subject Name : &nbsp; </b></label>
+        <input type="text" id="sub_name" name="sub_name" placeholder="Enter Subject name" align="center" required/>
+    </div><br>
+
+    <tr align="center">
+        <td><b>Question Number</b></td>
+        <td><b>Question </b></td>
+        <td><b>Option1</b></td>
+        <td><b>Option2</b></td>
+        <td><b>Option3</b></td>
+        <td><b>Option4</b></td>
+        <td><b>Answer</b></td>
+    </tr>
+    <tr>
+        <td align="center"><label >1</label></td>
+        <td><input class="form-control" id="r1c2" name="r1c2" placeholder="Question"  required /></td>
+        <td><input class="form-control" id="r1c3" name="r1c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r1c4" name="r1c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r1c5" name="r1c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r1c6" name="r1c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r1c7" name="r1c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >2</label></td>
+        <td><input class="form-control" id="r2c2" name="r2c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r2c3" name="r2c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r2c4" name="r2c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r2c5" name="r2c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r2c6" name="r2c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r2c7" name="r2c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >3</label></td>
+        <td><input class="form-control" id="r3c2" name="r3c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r3c3" name="r3c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r3c4" name="r3c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r3c5" name="r3c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r3c6" name="r3c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r3c7" name="r3c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >4</label></td>
+        <td><input class="form-control" id="r4c2" name="r4c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r4c3" name="r4c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r4c4" name="r4c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r4c5" name="r4c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r4c6" name="r4c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r4c7" name="r4c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >5</label></td>
+        <td><input class="form-control" id="r5c2" name="r5c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r5c3" name="r5c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r5c4" name="r5c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r5c5" name="r5c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r5c6" name="r5c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r5c7" name="r5c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >6</label></td>
+        <td><input class="form-control" id="r6c2" name="r6c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r6c3" name="r6c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r6c4" name="r6c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r6c5" name="r6c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r6c6" name="r6c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r6c7" name="r6c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >7</label></td>
+        <td><input class="form-control" id="r7c2" name="r7c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r7c3" name="r7c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r7c4" name="r7c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r7c5" name="r7c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r7c6" name="r7c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r7c7" name="r7c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >8</label></td>
+        <td><input class="form-control" id="r8c2" name="r8c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r8c3" name="r8c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r8c4" name="r8c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r8c5" name="r8c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r8c6" name="r8c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r8c7" name="r8c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >9</label></td>
+        <td><input class="form-control" id="r9c2" name="r9c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r9c3" name="r9c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r9c4" name="r9c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r9c5" name="r9c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r9c6" name="r9c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r9c7" name="r9c7" placeholder="Answer" required /></td>
+    </tr>
+    <tr>
+        <td align="center"><label >10</label></td>
+        <td><input class="form-control" id="r10c2" name="r10c2" placeholder="Question" required /></td>
+        <td><input class="form-control" id="r10c3" name="r10c3" placeholder="option1" required /></td>
+        <td><input class="form-control" id="r10c4" name="r10c4" placeholder="option2" required /></td>
+        <td><input class="form-control" id="r10c5" name="r10c5" placeholder="option3" required /></td>
+        <td><input class="form-control" id="r10c6" name="r10c6" placeholder="option4" required /></td>
+        <td><input class="form-control" id="r10c7" name="r10c7" placeholder="Answer" required/></td>
+    </tr>
+<tr>
+
+</tr>
+</table>
+      <br />
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+        </div>
+</form>
+
+
+</body>
+
+</html>
+

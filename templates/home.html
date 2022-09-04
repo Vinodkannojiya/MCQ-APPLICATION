@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="learn" href="/learn">Learn</a>
+          <a class="nav-item nav-link" id="subject" href="/subject">Exam</a>
+          <a class="nav-item nav-link" id="result" href="/result">Result</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        </div>
+      </div>
+    </nav>
+<h1>This is your overall learning status!!!</h1>
+{% if status %}
+    <table border=3 width="80%"><tbody>
+        <tr align="center">
+            <th>USER NAME</th>
+            <th>SUBJECT NAME</th>
+            <th>EXAM DATE</th>
+            <th>NO OF EXAM COMPLETED</th>
+            <th>PASSED EXAMS</th>
+            <th>FAILED EXAMS</th>
+            <th>PERCENTAGE</th>
+            <th>AVG SCORE</th>
+        </tr>
+{% for row in status %}
+        <tr align="center">
+            <td>{{ row.user_name }}</td>
+            <td>{{ row.subject_name }}</td>
+            <td>{{ row.exam_date }}</td>
+            <td>{{ row.no_of_exam_completed }}</td>
+            <td>{{ row.passed_exams }}</td>
+            <td>{{ row.failed_exams }}</td>
+            <td>{{ row.percentage }}</td>
+            <td>{{ row.avg_score }}</td>
+        </tr>
+{% endfor %}
+        </tbody></table></br>
+{% endif %}
+
+
+</body>
+</html>
