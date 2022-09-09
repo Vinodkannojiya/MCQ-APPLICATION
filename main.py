@@ -3,6 +3,8 @@ import sys
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from functools import wraps
+import smtplib
+from prettytable import PrettyTable
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjahkjshkjdhjs'
@@ -18,10 +20,10 @@ class Database():
                                    cursorclass=pymysql.cursors.DictCursor)
         self.cur = self.con.cursor()
 
-    def create_user(self, username, password):
-        self.cur.execute(f"insert into user_table (username, password) "
-                         f"values (%s,%s)",
-                         (username, password))
+    def create_user(self, username, password, emailid, emailpassword):
+        self.cur.execute(f"insert into user_table (username, password, emailid, emailpassword) "
+                         f"values (%s,%s,%s,%s)",
+                         (username, password, emailid, emailpassword))
         self.con.commit()
 
     def check_user(self, username):
@@ -41,6 +43,11 @@ class Database():
 
     def list_of_question(self, sub):
         self.cur.execute(f"select * from question_table where subject_name='{sub}'")
+        res = self.cur.fetchall()
+        return res
+
+    def get_user_mail(self, user):
+        self.cur.execute(f"select emailid,emailpassword from user_table where username='{user}'")
         res = self.cur.fetchall()
         return res
 
@@ -104,7 +111,7 @@ class Database():
             max_num = int(max_sub_num[0]['max_num']) + 1
         else:
             max_num = 1
-        sub_name = sub_name.upper() +"_" + str(max_num)
+        sub_name = sub_name.upper() + "_" + str(max_num)
         question_query = "INSERT INTO question_table " \
                          f"(subject_name, added_date, question_number,question,option1,option2,option3,option4,answer)" \
                          " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -131,7 +138,6 @@ class Database():
         self.cur.execute(f"select question,answer from question_table where subject_name = '{sub_name}' ")
         res = self.cur.fetchall()
         return res
-
 
     def get_all_users(self):
         self.cur.execute(f"select * from user_table")
@@ -204,6 +210,9 @@ def sign_up():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        emailid = request.form.get('emailid')
+        emailpassword = request.form.get('emailpass')
+
         user = Database().check_user(username)
         if user:
             flash('User already exists.', category='error')
@@ -212,7 +221,7 @@ def sign_up():
         elif len(password) < 5:
             flash('Password must be at least 5 characters.', category='error')
         else:
-            Database().create_user(username, password)
+            Database().create_user(username, password, emailid, emailpassword)
             flash('Account created!', category='success')
             return redirect("/login")
 
@@ -366,11 +375,13 @@ def add_question():
     else:
         return render_template("add_question.html")
 
+
 @app.route("/learn/<string:sub_name1>")
 @is_logged_in
 def learn_sub(sub_name1):
     res = Database().learning_subjects(sub_name1)
     return render_template("learn.html", words=res)
+
 
 @app.route("/learn", methods=['GET', 'POST'])
 @is_logged_in
@@ -378,5 +389,38 @@ def learn():
     res = Database().list_of_subjects()
     return render_template("subject.html", learn=res)
 
+
+@app.route("/mail", methods=['GET', 'POST'])
+@is_logged_in
+def send_reports_on_mail():
+    if request.method == 'POST':
+        receivers_mail = ["vinodkanojiya1694@gmail.com","pmpramod1992@gmail.com","manojkanojiya2006@gmail.com"]
+        username = session['username']
+        user_mail = Database().get_user_mail(username)
+        sender_mail = user_mail[0]['emailid']
+        sender_password = user_mail[0]['emailpassword']
+
+        for dest in receivers_mail:
+            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s.ehlo()
+            s.starttls()
+            s.login(sender_mail, sender_password)
+            username = session['username']
+            status = Database().get_user_result_status(username)
+            message = PrettyTable(["user_name", "subject_name", "exam_date", "exam_completed", "passed_exams", "failed_exams",
+                             "percentage", "avg_score"])
+            for stat in status:
+                message.add_row([stat["user_name"], stat["subject_name"],
+                            stat["exam_date"], stat["no_of_exam_completed"],
+                            stat["passed_exams"], stat["failed_exams"],
+                            stat["percentage"], stat["avg_score"]])
+
+            s.sendmail(sender_mail, dest, message.get_string())
+            s.quit()
+    status = Database().get_user_result_status(username)
+    return render_template("home.html", status=status)
+
+
 if __name__ == "__main__":
-    app.run(port=5005, debug=True)
+    app.run(port=5006, debug=True)
+

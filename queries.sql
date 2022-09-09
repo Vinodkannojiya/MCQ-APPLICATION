@@ -95,6 +95,9 @@ CREATE TABLE `learning`.`user_table` (
   `user_id` BIGINT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(1000) NOT NULL,
   `password` VARCHAR(1000) NOT NULL,
+  `emailid` VARCHAR(1000) NOT NULL,
+  `emailpassword` VARCHAR(1000) NOT NULL,
+   creation_date date
    PRIMARY KEY (`user_id`));
 
 
