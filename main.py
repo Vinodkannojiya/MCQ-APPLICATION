@@ -1,5 +1,6 @@
 import pymysql
 import sys
+import random
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from functools import wraps
@@ -76,6 +77,7 @@ class Database():
 
     def submit_responses(self, username, sub_name, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10):
         responses = [res1, res2, res3, res4, res5, res6, res7, res8, res9, res10]
+
         self.cur.execute(
             "INSERT INTO response_table"
             "(user_name,subject_name,date_of_exam,res1,res2,res3,res4,res5,res6,res7,res8,res9,res10)"
@@ -104,7 +106,7 @@ class Database():
 
         option_and_answer = []
         answers = []
-        self.cur.execute(f"select max(substr(subject_name,length(subject_name)-1, length(subject_name))) max_num from "
+        self.cur.execute(f"select max(substr(subject_name,length(subject_name), length(subject_name))) max_num from "
                          f"question_table where subject_name like '{sub_name}%';")
         max_sub_num = self.cur.fetchall()
         if max_sub_num[0]['max_num']:
@@ -281,6 +283,7 @@ def result():
 @is_logged_in
 def question_from_subject(sub_name):
     que = Database().list_of_question(sub_name)
+    que = random.sample(que, len(que))
     return render_template("question.html", question=que)
 
 
@@ -422,5 +425,5 @@ def send_reports_on_mail():
 
 
 if __name__ == "__main__":
-    app.run(port=5006, debug=True)
+    app.run(port=5000, debug=True)
 
