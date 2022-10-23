@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" />
     <script>
+
         var duration = 60
         setTimeout(function(){
          document.forms[0].submit();
@@ -18,6 +19,7 @@
             var distance = countDownTime - now;
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
             document.getElementById("mytimer").innerHTML = "Time Remaining : " + seconds + " seconds ";
+            document.getElementById("mytimer_value").value = seconds;
             if (distance < 0){
             clearInterval(x)
             }
@@ -43,7 +45,7 @@
 <form action="/question" method="POST">
 {% if question %}
     <h1 name="subject_name">Question from Subject :- {{question[0].subject_name}}</h1>
-    <p id="mytimer" align="right" style="font-size:200%"></p></br>
+    <p id="mytimer" name="mytimer" align="right" style="font-size:200%">ABCD</p></br>
     <table border=3 width=80%" align="center"><tbody>
         <tr>
             <th>Question No</th>
@@ -74,6 +76,7 @@
 {% endfor %}
      </tbody></table></br>
     <input type="hidden" name="sub_name" value={{ question[0].subject_name }}>
+    <input type="hidden" id="mytimer_value" name="mytimer_value" value="">
      <div align="center">
         <button type="submit" class="btn btn-primary" >SUBMIT ANSWERS</button>
      </div>

@@ -56,11 +56,12 @@ class Database():
         self.cur.execute(
             f"select user_name,subject_name,substring(DATE_OF_EXAM,1,10) exam_date,count(user_name) no_of_exam_completed,"
             f" count(case when score >= 8 then 'PASS' end) passed_exams, count(case when score < 8 then 'FAIL' end) failed_exams, "
-            f"(count(case when score >= 8 then 'PASS' end) / count(user_name)) * 100 percentage, avg(score) avg_score "
+            f"(count(case when score >= 8 then 'PASS' end) / count(user_name)) * 100 percentage, avg(score) avg_score, "
+            f"avg(time_utilise) time_taken "
             f"from result_table "
             f"where user_name='{username}' "
             f"group by user_name,subject_name,substring(DATE_OF_EXAM,1,10) "
-            f"order by substring(DATE_OF_EXAM,1,10) desc, subject_name")
+            f"order by substring(DATE_OF_EXAM,1,10) desc")
         res = self.cur.fetchall()
         return res
 
@@ -68,21 +69,22 @@ class Database():
         self.cur.execute(
             f"select user_name,subject_name,substring(DATE_OF_EXAM,1,10) exam_date,count(user_name) no_of_exam_completed,"
             f" count(case when score >= 8 then 'PASS' end) passed_exams, count(case when score < 8 then 'FAIL' end) failed_exams, "
-            f"(count(case when score >= 8 then 'PASS' end) / count(user_name)) * 100 percentage, avg(score) avg_score "
+            f"(count(case when score >= 8 then 'PASS' end) / count(user_name)) * 100 percentage, avg(score) avg_score, "
+            f"avg(time_utilise) time_taken "
             f"from result_table "
             f"group by user_name,subject_name,substring(DATE_OF_EXAM,1,10) "
             f"order by substring(DATE_OF_EXAM,1,10) desc, subject_name")
         res = self.cur.fetchall()
         return res
 
-    def submit_responses(self, username, sub_name, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10):
+    def submit_responses(self, username, sub_name, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, actual_time):
         responses = [res1, res2, res3, res4, res5, res6, res7, res8, res9, res10]
 
         self.cur.execute(
             "INSERT INTO response_table"
-            "(user_name,subject_name,date_of_exam,res1,res2,res3,res4,res5,res6,res7,res8,res9,res10)"
-            " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-            (username, sub_name, datetime.now(), res1, res2, res3, res4, res5, res6, res7, res8, res9, res10))
+            "(user_name,subject_name,date_of_exam,res1,res2,res3,res4,res5,res6,res7,res8,res9,res10,time_utilise)"
+            " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+            (username, sub_name, datetime.now(), res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, actual_time))
         self.con.commit()
 
         self.cur.execute(
@@ -91,15 +93,16 @@ class Database():
         answers = [output['ans1'], output['ans2'], output['ans3'], output['ans4'], output['ans5'], output['ans6'],
                    output['ans7'], output['ans8'], output['ans9'], output['ans10']]
         sum_of_correct_ans = 0
+        attempted = 10 - int(responses.count(None))
 
         for i in range(10):
             if answers[i] == responses[i]:
                 sum_of_correct_ans += 1
         total_questions = 10
         percentage = (sum_of_correct_ans / total_questions) * 100
-        self.cur.execute(f"insert into result_table (user_name,subject_name,date_of_exam,score,total,percentage) "
-                         f"values (%s,%s,%s,%s,%s,%s)",
-                         (username, sub_name, datetime.now(), sum_of_correct_ans, total_questions, percentage))
+        self.cur.execute(f"insert into result_table (user_name,subject_name,date_of_exam,attempted,score,total,percentage,time_utilise) "
+                         f"values (%s,%s,%s,%s,%s,%s,%s,%s)",
+                         (username, sub_name, datetime.now(), attempted,sum_of_correct_ans, total_questions, percentage,actual_time))
         self.con.commit()
 
     def submit_questions(self, sub_name, question_list):
@@ -176,8 +179,8 @@ class Database():
                          f"(select count(*) from user_table) as user_count,"
                          f"(select count(distinct subject_name) from question_table) as subject_count, "
                          f"(select count(*) from result_table) as total_exam_conducted, "
-                         f"(select count(*) from result_table where score >= 4) as exam_passed, "
-                         f"(select count(*) from result_table where score < 4) as exam_failed "
+                         f"(select count(*) from result_table where score >= 8) as exam_passed, "
+                         f"(select count(*) from result_table where score < 8) as exam_failed "
                          f"from dual ")
         res = self.cur.fetchall()
         return res
@@ -292,6 +295,8 @@ def question_from_subject(sub_name):
 def question_response():
     username = session['username']
     sub_name = request.form.get('sub_name')
+    remaining_time = int(request.form.get('mytimer_value'))
+    actual_time = 60 - (0 if remaining_time == -1 else remaining_time)
     res1 = request.form.get('1')
     res2 = request.form.get('2')
     res3 = request.form.get('3')
@@ -302,7 +307,7 @@ def question_response():
     res8 = request.form.get('8')
     res9 = request.form.get('9')
     res10 = request.form.get('10')
-    Database().submit_responses(username, sub_name, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10)
+    Database().submit_responses(username, sub_name, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, actual_time)
     return redirect("/result")
 
 

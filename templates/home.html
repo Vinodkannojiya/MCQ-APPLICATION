@@ -33,6 +33,7 @@
             <th>FAILED EXAMS</th>
             <th>PERCENTAGE</th>
             <th>AVG SCORE</th>
+            <th>AVG TIME TAKEN</th>
         </tr>
 {% for row in status %}
         <tr align="center">
@@ -44,6 +45,7 @@
             <td>{{ row.failed_exams }}</td>
             <td>{{ row.percentage }}</td>
             <td>{{ row.avg_score }}</td>
+            <td>{{ row.time_taken }}</td>
         </tr>
 {% endfor %}
         </tbody></table></br>

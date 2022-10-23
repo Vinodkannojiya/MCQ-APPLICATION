@@ -49,18 +49,22 @@
             <th>USER NAME</th>
             <th>SUBJECT NAME</th>
             <th>DATE OF EXAM</th>
+            <th>ATTEMPTED</th>
             <th>SCORE</th>
             <th>TOTAL</th>
             <th>PERCENTAGE</th>
+            <th>TIME TAKEN</th>
         </tr>
 {% for row in result %}
         <tr align="center">
             <td>{{ row.user_name }}</td>
             <td>{{ row.subject_name }}</td>
             <td>{{ row.date_of_exam }}</td>
+            <td>{{ row.attempted }}</td>
             <td align="right">{{ row.score }}</td>
             <td align="right">{{ row.total }}</td>
             <td align="right" name="perc">{{ row.percentage }}</td>
+            <td>{{ row.time_utilise }}</td>
         </tr>
 {% endfor %}
         </tbody></table></br>
