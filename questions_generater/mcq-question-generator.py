@@ -255,6 +255,35 @@ def word_generate():
             print(answer_query)
             ans_list.clear()
 
+def addition_table():
+    subject_name = "MATH_ADDITION_"
+    nums = range(1, 31)
+    additioner =[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    ans_list = []
+    for num in nums:
+        for add in additioner:
+            ans = num + add
+            ans_list.append(ans)
+            opt1 = ans
+            opt2 = ans - 1
+            opt3 = ans + 1
+            opt4 = ans + 2
+            opts = [opt1, opt2, opt3, opt4]
+            options = random.sample(opts, len(opts))
+
+            question_query = f"insert into `learning`.`question_table` " \
+            f"(subject_name,question_number,question,option1,option2,option3,option4,answer,added_date) values " \
+            f"('{subject_name}{num}',{add},'{num} + {add}',{options[0]},{options[1]},{options[2]},{options[3]},{ans},'{current_date}');"
+            print(question_query)
+        answer_query = f"insert into `learning`.`answer_table` " \
+                       f"(subject_name, ans1, ans2,ans3,ans4,ans5,ans6,ans7,ans8,ans9,ans10,added_date) values " \
+                       f"('{subject_name}{num}',{ans_list[0]},{ans_list[1]},{ans_list[2]},{ans_list[3]},{ans_list[4]},{ans_list[5]}," \
+                       f"{ans_list[6]},{ans_list[7]},{ans_list[8]},{ans_list[9]},'{current_date}');"
+        print(answer_query)
+        ans_list.clear()
+
 if __name__ == "__main__":
-    # multiplication_table()
+    multiplication_table()
     word_generate()
+    addition_table()
